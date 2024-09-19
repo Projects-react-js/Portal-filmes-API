@@ -1,8 +1,12 @@
-export default function CardContainer() {
+export default function CardContainer({ title, children }) {
     return(
         <>
-        <h1>Card Container</h1>
-        {/* Container para cards */}
+        <div className="container">
+            <h1>{title}</h1>
+            <div className="flex">
+                {children}
+            </div>
+        </div>
         </>
     )
 }

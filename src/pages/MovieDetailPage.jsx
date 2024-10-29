@@ -1,14 +1,33 @@
-import { useParams } from "react-router-dom"
+import { useEffect, useState } from 'react';
+import {useParams} from 'react-router-dom'
 
 export default function MovieDetailPage(){
 
-    const {id} = useParams()
+    const {id} = useParams();
+
+    const [filme, setFilme] = useState([])
+
+    useEffect(() => {
+        fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=7c572a9f5b3ba776080330d23bb76e1e&language=pt-br`)
+        .then(response => response.json())
+        .then(data => {
+            setFilme(data);
+            console.log(data)
+        })
+        .catch(error => console.error(error))
+        .finally(() => console.log('fetch finalizado'));
+      }, []);
 
     return(
         <>
-        <h1>Movie Detail Page</h1>
-        
-        <p>O id do filme é: {id}</p>
+        <div className='h-[500px] bg-no-repeat' 
+        style={{
+            backgroundImage: `url('https://image.tmdb.org/t/p/w154${filme.backdrop_path}')`
+        }}>
+            <h1>{filme.title}</h1>
+            <p>⭐ {filme.vote_avaerage}</p>
+        </div>
         </>
+
     )
 }
